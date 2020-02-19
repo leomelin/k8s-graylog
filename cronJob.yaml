@@ -2,6 +2,7 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: curl-cron-job
+  namespace: kube-system
 spec:
   schedule: "* * * * *"
   jobTemplate:
@@ -14,5 +15,5 @@ spec:
             args:
             - /bin/sh
             - -c
-            - apk add curl -y; while true; do curl -XPOST http://graylog3:12201/gelf -p0 -d '{"short_message":"Hello there, i am your corn job ;)", "host":"alpine-k8s.org", "facility":"test", "_foo":"bar"}';sleep 1s; done
+            - apk add curl -y; curl -XPOST http://graylog3:12201/gelf -p0 -d '{"short_message":"Minä olen omena", "host":"alpine-k8s.org", "facility":"test", "_foo":"bar"}'
           restartPolicy: OnFailure
